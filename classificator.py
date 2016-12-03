@@ -1,6 +1,6 @@
 from Tkinter import *
 
-i = -1
+i = 0
 
 def save(l, status):
     print l.cget("text") + "----------> " +  status
@@ -36,7 +36,7 @@ def main():
     c3 = Canvas(c,width=800)
     c3.pack(side = 'right',expand=1,fill=BOTH)
 
-    l = Label(c2, text="", width=120)
+    l = Label(c2, text="Tweet " + str(i) + ": " + f[i], width=120)
     l.pack()
 
     b1 = Button(c3,text='Good',command=lambda:save(l, "good"))
