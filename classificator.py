@@ -2,6 +2,7 @@ from Tkinter import *
 from tkFileDialog import askopenfilename
 import os
 import shutil
+import re
 
 
 class Classificator(Frame):
@@ -62,16 +63,29 @@ class Classificator(Frame):
            shutil.copy(file_path,  self.classified_file_path)
 
        file = open(self.classified_file_path,'r')
-       self.f = file.readlines()
+
+       self.f = []
+       tweet = ''
+       for line in file:
+           tweet += line
+           if line[:4] == '####':
+               self.f.append(tweet)
+               tweet = ''
+
        file.close()
+
        self.tweet_counter = 0
+       while self.f[self.tweet_counter][:4] == '###!':
+           self.tweet_counter += 1
 
        self.tweet_widget.config(text="Tweet " + str(self.tweet_counter) + ": " + self.f[self.tweet_counter])
-
        self.tweet_widget.pack()
 
     def classify(self, status):
-        self.f[self.tweet_counter] = "###!### " + self.f[self.tweet_counter].rstrip() + " ### " + status + " ###"
+        if self.f[self.tweet_counter][:4] == '###!':
+            self.f[self.tweet_counter] = re.sub(r'###![^#]*###', '###!' + status + '###' , self.f[self.tweet_counter])
+        else:
+            self.f[self.tweet_counter] = "###!" + status + "### "  + self.f[self.tweet_counter]
         self.next()
 
     def delete(self,c2):
