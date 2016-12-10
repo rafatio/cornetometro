@@ -8,6 +8,7 @@ import re
 class Classificator(Frame):
 
     def __init__(self, parent):
+        Frame.__init__(self, parent)
 
         self.parent = parent
         self.tweet_counter = 0
@@ -50,6 +51,14 @@ class Classificator(Frame):
 
         b4 = Button(c3,text='Delete',command=lambda:self.delete(c2))
         b4.pack(fill='x')
+
+        # Keyboard shortcuts
+        parent.bind('g', lambda e: self.classify("good"))
+        parent.bind('b', lambda e: self.classify("bad"))
+        parent.bind('s', lambda e: self.save_file())
+        parent.bind('<Left>', lambda e: self.previous())
+        parent.bind('<Right>', lambda e: self.next())
+        parent.bind('d', lambda e: self.delete(c2))
 
     def openfile(self,c2):
 
