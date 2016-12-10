@@ -28,7 +28,9 @@ class Classificator(Frame):
         c5 = Canvas(c,width=800)
         c5.pack(side = 'right',expand=1,fill=BOTH)
 
-        self.tweet_widget = Label(c2, text="Carregue algum arquivo", width=120)
+        self.tweet_label = Label(c2, text="Nenhum tweet")
+        self.tweet_label.pack()
+        self.tweet_widget = Label(c2, text="Carregue algum arquivo", width=120, font=('Helvetica', 10, 'bold'))
         self.tweet_widget.pack()
 
         b3 = Button(c5,text='Next',command=lambda:self.next())
@@ -83,11 +85,14 @@ class Classificator(Frame):
 
        file.close()
 
+       # Start in first unclassified tweet
        self.tweet_counter = 0
        while self.f[self.tweet_counter][:4] == '###!':
            self.tweet_counter += 1
 
-       self.tweet_widget.config(text="Tweet " + str(self.tweet_counter) + ": " + self.f[self.tweet_counter])
+       self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+       self.tweet_label.pack()
+       self.tweet_widget.config(text=self.f[self.tweet_counter])
        self.tweet_widget.pack()
 
     def classify(self, status):
@@ -100,8 +105,9 @@ class Classificator(Frame):
     def delete(self,c2):
         del self.f[self.tweet_counter]
 
-        self.tweet_widget.config(text="Tweet " + str(self.tweet_counter) + ": " + self.f[self.tweet_counter])
-
+        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+        self.tweet_label.pack()
+        self.tweet_widget.config(text=self.f[self.tweet_counter])
         self.tweet_widget.pack()
 
     def save_file(self):
@@ -120,7 +126,10 @@ class Classificator(Frame):
             self.getTweet("+")
 
     def getTweet(self, direction):
-        self.tweet_widget.config(text="Tweet " + str(self.tweet_counter) + ": " + self.f[self.tweet_counter])
+        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+        self.tweet_label.pack()
+        self.tweet_widget.config(text=self.f[self.tweet_counter])
+        self.tweet_widget.pack()
 
         ''' TO_DECIDE: MOSTRAR OU NAO OS TWEETS JA CLASSIFICADOS
         if not self.f[self.tweet_counter].startswith("###!###"):
