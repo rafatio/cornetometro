@@ -1,0 +1,7 @@
+- Substituir nomes de jogadores por um token especial #player
+- Substituir nomes de times por um token especial #team
+- Colocar tudo em letras minúsculas
+- Substituir placares "1-1", "2-0" etc por token #score
+- Remover repetições excessivas de uma mesma letra (?) ex: "GOOOOOAL", "YESSSSS"
+- Usar stemming
+- Treinar um vocabulário específico em vez de geral
