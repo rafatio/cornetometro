@@ -12,6 +12,7 @@ class Classificator(Frame):
 
         self.parent = parent
         self.tweet_counter = 0
+        self.tweets_left = 0
 
         c = Canvas(self.parent,width=800)
         c.pack(side = 'left',expand=1,fill=BOTH)
@@ -84,13 +85,15 @@ class Classificator(Frame):
                tweet = ''
 
        file.close()
+       self.tweets_left = len(self.f)
 
        # Start in first unclassified tweet
        self.tweet_counter = 0
        while self.f[self.tweet_counter][:4] == '###!':
            self.tweet_counter += 1
+           self.tweets_left -= 1
 
-       self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+       self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ": (" + str(self.tweets_left) + " left)")
        self.tweet_label.pack()
        self.tweet_widget.config(text=self.f[self.tweet_counter])
        self.tweet_widget.pack()
@@ -100,12 +103,14 @@ class Classificator(Frame):
             self.f[self.tweet_counter] = re.sub(r'###![^#]*###', '###!' + status + '###' , self.f[self.tweet_counter])
         else:
             self.f[self.tweet_counter] = "###!" + status + "### "  + self.f[self.tweet_counter]
+        self.tweets_left -= 1
         self.next()
 
     def delete(self,c2):
         del self.f[self.tweet_counter]
+        self.tweets_left -= 1
 
-        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ": (" + str(self.tweets_left) + " left)")
         self.tweet_label.pack()
         self.tweet_widget.config(text=self.f[self.tweet_counter])
         self.tweet_widget.pack()
@@ -126,7 +131,7 @@ class Classificator(Frame):
             self.getTweet("+")
 
     def getTweet(self, direction):
-        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ":")
+        self.tweet_label.config(text ="Tweet " + str(self.tweet_counter) + ": (" + str(self.tweets_left) + " left)")
         self.tweet_label.pack()
         self.tweet_widget.config(text=self.f[self.tweet_counter])
         self.tweet_widget.pack()
