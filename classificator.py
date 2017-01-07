@@ -14,19 +14,19 @@ class Classificator(Frame):
         self.tweet_counter = 0
         self.tweets_left = 0
 
-        c = Canvas(self.parent,width=800)
+        c = Canvas(self.parent,width=1000)
         c.pack(side = 'left',expand=1,fill=BOTH)
 
-        c2 = Canvas(c,width=800)
+        c2 = Canvas(c,width=1000)
         c2.pack(side = 'left',expand=1,fill=BOTH)
 
-        c3 = Canvas(c,width=800)
+        c3 = Canvas(c,width=1000)
         c3.pack(side = 'right',expand=1,fill=BOTH)
 
-        c4 = Canvas(c,width=800)
+        c4 = Canvas(c,width=1000)
         c4.pack(side = 'right',expand=1,fill=BOTH)
 
-        c5 = Canvas(c,width=800)
+        c5 = Canvas(c,width=1000)
         c5.pack(side = 'right',expand=1,fill=BOTH)
 
         self.tweet_label = Label(c2, text="Nenhum tweet")
@@ -61,7 +61,7 @@ class Classificator(Frame):
         parent.bind('s', lambda e: self.save_file())
         parent.bind('<Left>', lambda e: self.previous())
         parent.bind('<Right>', lambda e: self.next())
-        parent.bind('d', lambda e: self.delete(c2))
+        parent.bind('d', lambda e: self.classify("deleted"))
 
     def openfile(self,c2):
 
@@ -115,10 +115,13 @@ class Classificator(Frame):
         self.tweet_widget.config(text=self.f[self.tweet_counter])
         self.tweet_widget.pack()
 
+
     def save_file(self):
         with open(self.classified_file_path, "w") as file:
             for line in self.f:
-                file.write(line)
+                if line[:7] != '###!del':
+                    file.write(line)
+
 
     def previous(self):
         if (self.tweet_counter > 0):
