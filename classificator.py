@@ -76,6 +76,9 @@ class Classificator(Frame):
 
        file = open(self.classified_file_path,'r')
 
+       self.teams = file.readline()
+       self.players = file.readline()
+
        self.f = []
        tweet = ''
        for line in file:
@@ -118,9 +121,12 @@ class Classificator(Frame):
 
     def save_file(self):
         with open(self.classified_file_path, "w") as file:
+            file.write(self.teams)
+            file.write(self.players)
             for line in self.f:
                 if line[:7] != '###!del':
                     file.write(line)
+            file.close()
 
 
     def previous(self):
