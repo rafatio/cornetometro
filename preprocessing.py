@@ -10,6 +10,9 @@ def preprocess_tweet(tweet):
   processed_tweet = tweet.lower() # To lowercase
   processed_tweet = re.sub(r'#[^#!\n ]+', '', processed_tweet) # Removing hashtags
   processed_tweet = re.sub(r'http(.)+', '', processed_tweet) # Removing links
+
+  processed_tweet = re.sub(r'[0-9]-[0-9]', '#score', processed_tweet) # Changing scores to custom token
+
   return processed_tweet
 
 def preprocess_file(input_file, output_file):
