@@ -1,12 +1,16 @@
 import os
+import re
 
 count = 0
 
 def preprocess_tweet(tweet):
   global count
-
   count += 1
-  return tweet
+
+  processed_tweet = tweet.lower() # To lowercase
+  processed_tweet = re.sub(r'#[^#!\n ]+', '', processed_tweet) # Removing hashtags
+  processed_tweet = re.sub(r'http(.)+', '', processed_tweet) # Removing links
+  return processed_tweet
 
 def preprocess_file(input_file, output_file):
   tweet = ''
