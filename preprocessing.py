@@ -12,6 +12,7 @@ def preprocess_tweet(tweet):
   processed_tweet = re.sub(r'http(.)+', '', processed_tweet) # Removing links
 
   processed_tweet = re.sub(r'[0-9]-[0-9]', '#score', processed_tweet) # Changing scores to custom token
+  processed_tweet = re.sub(r'(\w)\1{2,}', r'\1', processed_tweet) # Removing unnecessary repeating of letters
 
   return processed_tweet
 
