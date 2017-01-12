@@ -10,7 +10,7 @@ def word_feats(words):
 def get_classified_tweets():
     positive_tweets = []
     negative_tweets = []
-    for filename in os.listdir('bin'):
+    for filename in os.listdir('preprocessed'):
         file = open('bin/' + filename)
         for tweet in file:
             if tweet[:11] == '###!good###':
