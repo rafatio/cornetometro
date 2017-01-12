@@ -50,7 +50,7 @@ def preprocess_file(input_file, output_file):
 path_of_file = os.path.dirname(os.path.realpath(__file__))
 path_datasets = path_of_file + "/data_classified"
 
-output_folder = path_of_file + "/bin"
+output_folder = path_of_file + "/preprocessed"
 output_file_path = output_folder + "/dataset.txt"
 
 if not (os.path.isdir(output_folder)):
