@@ -11,7 +11,6 @@ import collections
 from nltk.stem.porter import PorterStemmer
 
 
-
 def word_feats(words):
     return dict([(word, True) for word in words])
 
@@ -86,7 +85,7 @@ def classifier(method):
     neg_f_measure = 0.0
 
     for x in xrange(repeat):
-        train_features, test_features = train_test_split(negative_features + positive_features, test_size=0.25, random_state=seed_random)
+        train_features, test_features = train_test_split(negative_features + positive_features, test_size=0.25, random_state=randint(100))
 
         print 'train on %d instances, test on %d instances' % (len(train_features), len(test_features))
 
@@ -148,8 +147,6 @@ for word, freq in word_fd.iteritems():
 
 best = sorted(word_scores.iteritems(), key=lambda (w,s): s, reverse=True)[:500]
 bestwords = set([w for w, s in best])
-
-seed_random = randint(100)
 
 print 'evaluating single word features'
 classifier(get_features)
