@@ -8,41 +8,42 @@ def preprocess_tweet(tweet, teams, players):
   count += 1
 
   processed_tweet = tweet.lower() # To lowercase
+  processed_tweet = re.sub('\n', ' ', processed_tweet) # Removing newlines
   processed_tweet = re.sub(r'#[^#!\n ]+', '', processed_tweet) # Removing hashtags
   processed_tweet = re.sub(r'http(.)+', '', processed_tweet) # Removing links
 
   processed_tweet = re.sub(r'[0-9]-[0-9]', '#score', processed_tweet) # Changing scores to custom token
   processed_tweet = re.sub(r'(\w)\1{2,}', r'\1', processed_tweet) # Removing unnecessary repeating of letters
-  
+
   # Replaces team names for custom token
   for team in teams:
     if team in processed_tweet:
       processed_tweet = processed_tweet.replace(team, "#team")
-      
+
   # Replaces player names for custom token
   for player in players:
     if player in processed_tweet:
       processed_tweet = processed_tweet.replace(player, "#player")
-  
+
   # Merge two consecutive occurences of team and player tokens
   processed_tweet = processed_tweet.replace("#team #team", "#team")
   processed_tweet = processed_tweet.replace("#player #player", "#player")
-  
+
   return processed_tweet
 
 def preprocess_file(input_file, output_file):
   tweet = ''
-  
+
   teams = input_file.readline()[:-1].lower().split() # Reads teams from fist line. Removes newline and splits the string.
   players = input_file.readline()[:-1].lower().split() # Reads players from fist line.
-  
+
   line_number = 0
   for line in input_file:
     if line[:4] == '####':
       if tweet[:4] == '###!':
         processed_tweet = preprocess_tweet(tweet, teams, players)
         output_file.write(processed_tweet)
-        output_file.write('#####\n')
+        output_file.write('\n#####\n')
       tweet = ''
     else:
       tweet += line
