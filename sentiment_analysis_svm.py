@@ -46,7 +46,7 @@ def test_classifier(data, classes):
     training_vectors = vectorizer.fit_transform(training_data)
     test_vectors = vectorizer.transform(test_data)
 
-    classifier = svm.SVC()
+    classifier = svm.LinearSVC()
     classifier.fit(training_vectors, training_classes)
     prediction = classifier.predict(test_vectors)
 
