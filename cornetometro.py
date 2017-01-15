@@ -60,7 +60,7 @@ class Cornetometro:
         neg = self.get_stats(player)[NEGATIVE]
         total = pos + neg
 
-        if total == 0:
+        if total == 0 or pos - neg == 0:
             return 5.0
 
         max_tweets = self.__max_tweets()
