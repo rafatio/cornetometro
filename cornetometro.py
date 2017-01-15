@@ -69,10 +69,12 @@ class Cornetometro:
 
         if pos > neg:
             outlook = 1
-            weight = float(pos) / total
+            digg = pos - neg
         else:
             outlook = -1
-            weight = float(neg) / total
+            diff = neg - pos
+
+        weight = float(diff) / total
 
         score = 5.0 + (outlook * 5 * amount_weight * weight)
         return score
