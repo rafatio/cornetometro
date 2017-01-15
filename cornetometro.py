@@ -69,7 +69,7 @@ class Cornetometro:
 
         if pos > neg:
             outlook = 1
-            digg = pos - neg
+            diff = pos - neg
         else:
             outlook = -1
             diff = neg - pos
