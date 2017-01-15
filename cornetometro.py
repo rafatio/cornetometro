@@ -60,6 +60,9 @@ class Cornetometro:
         neg = self.get_stats(player)[NEGATIVE]
         total = pos + neg
 
+        if total == 0:
+            return 5.0
+
         max_tweets = self.__max_tweets()
         amount_proportion = float(total)/(0.5*max_tweets) if float(total) < 0.5*max_tweets else 1
         amount_weight = (1 + (4 * amount_proportion)) / 5
@@ -71,7 +74,7 @@ class Cornetometro:
             outlook = -1
             weight = float(neg) / total
 
-        score = 5 + (outlook * 5 * amount_weight * weight)
+        score = 5.0 + (outlook * 5 * amount_weight * weight)
         return score
 
     def __max_tweets(self):
